@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shared 24dp shape for actual file preview thumbnails in list/table and grid views. -->
+    <style name="AmazeModRoundedThumbnailShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+</resources>

@@ -1,4 +1,4 @@
-# Amaze File Manager custom — v0.3.0 direct source
+# Amaze File Manager custom — v0.3.1 direct source
 
 This branch is the fully materialized source tree of the last known-good custom build:
 
@@ -8,6 +8,6 @@ From v0.3.0 onward the repository builds the checked-in source directly. There i
 
 The later experimental v0.2.18 / v0.2.18.1 UI changes are intentionally **not included**. Future UI changes should be edited directly in this source tree and committed normally.
 
-Signing material is intentionally absent from this branch. See `SIGNING.md`.
+Signing uses the private `signing/` directory in this repository, matching the proven v0.2.17 setup. See `SIGNING.md`.
 
 Provenance is documented in `UPSTREAM.md` and `LEGACY_PATCH_BASE.md`. The original upstream README is retained as `README-UPSTREAM.md`.

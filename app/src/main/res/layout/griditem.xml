@@ -21,7 +21,7 @@
             android:layout_height="@dimen/zero_dp"
             android:layout_marginBottom="6dp"
             android:layout_weight="1"
-            android:background="#fff"
+            android:background="?attr/colorSurface"
             android:foregroundGravity="fill">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -33,12 +33,13 @@
                 android:contentDescription="@string/icon"
                 android:scaleType="centerInside" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/icon_thumb"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/AmazeModRoundedThumbnailShape" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

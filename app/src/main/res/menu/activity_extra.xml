@@ -49,10 +49,6 @@
         android:id="@+id/view"
         android:title=""/>
     <item
-        android:id="@+id/hiddenitems"
-        android:visible="false"
-        android:title="@string/hiddenfiles" />
-    <item
         android:id="@+id/sethome"
         android:title="@string/set_as_home"/>
     <item

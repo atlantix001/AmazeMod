@@ -113,7 +113,6 @@ import com.amaze.filemanager.ui.ExtensionsKt;
 import com.amaze.filemanager.ui.activities.superclasses.PermissionsActivity;
 import com.amaze.filemanager.ui.dialogs.AlertDialog;
 import com.amaze.filemanager.ui.dialogs.GeneralDialogCreation;
-import com.amaze.filemanager.ui.dialogs.HiddenFilesDialog;
 import com.amaze.filemanager.ui.dialogs.HistoryDialog;
 import com.amaze.filemanager.ui.dialogs.RenameBookmark;
 import com.amaze.filemanager.ui.dialogs.RenameBookmark.BookmarkCallback;
@@ -1222,7 +1221,6 @@ public class MainActivity extends PermissionsActivity
       menu.findItem(R.id.history).setVisible(true);
       menu.findItem(R.id.sethome).setVisible(true);
       menu.findItem(R.id.sort).setVisible(true);
-      menu.findItem(R.id.hiddenitems).setVisible(true);
       menu.findItem(R.id.view).setVisible(true);
       menu.findItem(R.id.extract).setVisible(false);
       invalidatePasteSnackbar(true);
@@ -1246,7 +1244,6 @@ public class MainActivity extends PermissionsActivity
         menu.findItem(R.id.dsort).setVisible(false);
         menu.findItem(R.id.sortby).setVisible(false);
       }
-      menu.findItem(R.id.hiddenitems).setVisible(false);
       menu.findItem(R.id.view).setVisible(false);
       invalidatePasteSnackbar(false);
     } else if (fragment instanceof CompressedExplorerFragment) {
@@ -1258,7 +1255,6 @@ public class MainActivity extends PermissionsActivity
       menu.findItem(R.id.home).setVisible(false);
       menu.findItem(R.id.history).setVisible(false);
       menu.findItem(R.id.sort).setVisible(false);
-      menu.findItem(R.id.hiddenitems).setVisible(false);
       menu.findItem(R.id.view).setVisible(false);
       menu.findItem(R.id.extract).setVisible(true);
       invalidatePasteSnackbar(false);
@@ -1340,8 +1336,6 @@ public class MainActivity extends PermissionsActivity
                       return true;
                     });
             builder.build().show();
-          } else if (item.getItemId() == R.id.hiddenitems) {
-            HiddenFilesDialog.showHiddenDialog(mainActivity, mainFragment);
           } else if (item.getItemId() == R.id.view) {
             int pathLayout =
                 dataUtils.getListOrGridForPath(mainFragment.getCurrentPath(), DataUtils.LIST);

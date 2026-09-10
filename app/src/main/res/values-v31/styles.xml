@@ -20,7 +20,7 @@
         <item name="colorSecondary">@android:color/system_accent1_200</item>
         <item name="colorControlActivated">@android:color/system_accent1_200</item>
         <item name="colorControlNormal">@android:color/system_neutral1_100</item>
-        <item name="colorControlHighlight">@android:color/system_accent1_800</item>
+        <item name="colorControlHighlight">@color/amaze_mod_light_control_highlight</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
@@ -31,7 +31,7 @@
         <item name="colorSecondary">@android:color/system_accent1_200</item>
         <item name="colorControlActivated">@android:color/system_accent1_200</item>
         <item name="colorControlNormal">@android:color/system_neutral1_100</item>
-        <item name="colorControlHighlight">@android:color/system_accent1_800</item>
+        <item name="colorControlHighlight">@color/amaze_mod_light_control_highlight</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

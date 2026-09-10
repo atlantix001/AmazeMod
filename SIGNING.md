@@ -1,24 +1,10 @@
 # Private APK signing
 
-No keystore or signing password is stored in this direct-source branch.
+This private repository intentionally keeps the existing signing material in `signing/`, matching the proven v0.2.17 setup.
 
-Configure these **Repository Actions secrets** before running the direct build:
+The direct build reads:
 
-- `AMAZE_KEYSTORE_B64` — Base64 encoding of the existing `amaze-custom.jks`
-- `AMAZE_STORE_PASSWORD`
-- `AMAZE_KEY_ALIAS`
-- `AMAZE_KEY_PASSWORD`
+- `signing/keystore.properties`
+- the keystore file referenced by its `storeFile` entry (currently `signing/amaze-custom.jks`)
 
-On GNU/Linux, create the Base64 value without line breaks with:
-
-```bash
-base64 -w 0 amaze-custom.jks
-```
-
-On macOS:
-
-```bash
-base64 < amaze-custom.jks | tr -d '\n'
-```
-
-Keep the repository private. The legacy branch/history contained signing material; moving signing to Actions secrets prevents new direct-source commits from continuing that practice, but it does not retroactively erase old Git objects.
+No GitHub Actions secrets are required for APK signing. Keep this repository private and avoid publishing or sharing the signing files.

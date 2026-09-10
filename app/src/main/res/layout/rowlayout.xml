@@ -51,11 +51,12 @@
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
                 android:id="@+id/apk_icon"/>
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/picture_icon"
                 android:layout_width="@dimen/minimal_icon_size"
                 android:layout_height="@dimen/minimal_icon_size"
                 android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/AmazeModRoundedThumbnailShape"
                 android:contentDescription="@string/icon" />
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="40dp"

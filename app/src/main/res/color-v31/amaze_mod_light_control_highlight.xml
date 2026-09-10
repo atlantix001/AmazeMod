@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Light dynamic accent with restrained alpha for Material/AppCompat press/focus feedback. -->
+    <item android:color="@android:color/system_accent1_200" android:alpha="0.28" />
+</selector>
