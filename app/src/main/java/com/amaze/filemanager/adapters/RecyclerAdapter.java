@@ -93,6 +93,7 @@ import com.bumptech.glide.request.target.Target;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -116,6 +117,7 @@ import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -1091,44 +1093,50 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       View iconBackground =
           getBoolean(PREFERENCE_USE_CIRCULAR_IMAGES) ? holder.genericIcon : holder.iconLayout;
       if (rowItem.isDirectory) {
-        iconBackground.setBackgroundColor(iconSkinColor);
+        setGridIconBackgroundColor(iconBackground, iconSkinColor);
       } else {
         switch (rowItem.filetype) {
           case Icons.VIDEO:
-            if (!getBoolean(PREFERENCE_SHOW_THUMB)) iconBackground.setBackgroundColor(videoColor);
+            if (!getBoolean(PREFERENCE_SHOW_THUMB)) {
+              setGridIconBackgroundColor(iconBackground, videoColor);
+            }
             break;
           case Icons.AUDIO:
-            iconBackground.setBackgroundColor(audioColor);
+            setGridIconBackgroundColor(iconBackground, audioColor);
             break;
           case Icons.PDF:
-            iconBackground.setBackgroundColor(pdfColor);
+            setGridIconBackgroundColor(iconBackground, pdfColor);
             break;
           case Icons.CODE:
-            iconBackground.setBackgroundColor(codeColor);
+            setGridIconBackgroundColor(iconBackground, codeColor);
             break;
           case Icons.TEXT:
-            iconBackground.setBackgroundColor(textColor);
+            setGridIconBackgroundColor(iconBackground, textColor);
             break;
           case Icons.COMPRESSED:
-            iconBackground.setBackgroundColor(archiveColor);
+            setGridIconBackgroundColor(iconBackground, archiveColor);
             break;
           case Icons.NOT_KNOWN:
-            iconBackground.setBackgroundColor(genericColor);
+            setGridIconBackgroundColor(iconBackground, genericColor);
             break;
           case Icons.APK:
-            if (!getBoolean(PREFERENCE_SHOW_THUMB)) iconBackground.setBackgroundColor(apkColor);
+            if (!getBoolean(PREFERENCE_SHOW_THUMB)) {
+              setGridIconBackgroundColor(iconBackground, apkColor);
+            }
             break;
           case Icons.IMAGE:
-            if (!getBoolean(PREFERENCE_SHOW_THUMB)) iconBackground.setBackgroundColor(videoColor);
+            if (!getBoolean(PREFERENCE_SHOW_THUMB)) {
+              setGridIconBackgroundColor(iconBackground, videoColor);
+            }
             break;
           default:
-            iconBackground.setBackgroundColor(iconSkinColor);
+            setGridIconBackgroundColor(iconBackground, iconSkinColor);
             break;
         }
       }
 
       if (isBackButton) {
-        iconBackground.setBackgroundColor(goBackColor);
+        setGridIconBackgroundColor(iconBackground, goBackColor);
       }
     }
 
@@ -1141,7 +1149,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             || !getBoolean(PREFERENCE_SHOW_THUMB)) {
           View iconBackground =
               getBoolean(PREFERENCE_USE_CIRCULAR_IMAGES) ? holder.genericIcon : holder.iconLayout;
-          iconBackground.setBackgroundColor(goBackColor);
+          setGridIconBackgroundColor(iconBackground, goBackColor);
         }
       }
 
@@ -1153,10 +1161,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.baseItemView.setBackgroundResource(R.drawable.item_doc_grid);
       } else {
         holder.baseItemView.setBackgroundResource(R.drawable.ic_grid_card_background_dark);
-        holder
-            .baseItemView
-            .findViewById(R.id.icon_frame_grid)
-            .setBackgroundColor(Utils.getColor(context, R.color.icon_background_dark));
+        setGridIconBackgroundColor(
+            holder.iconLayout, Utils.getColor(context, R.color.icon_background_dark));
       }
     }
 
@@ -1354,6 +1360,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     modelProvider.getPreloadRequestBuilder(iconData).listener(requestListener).into(view);
   }
 
+  /**
+   * Colors the grid thumbnail surface without replacing its rounded shape drawable.
+   * Generic icons can still use their legacy background behavior.
+   */
+  private void setGridIconBackgroundColor(@Nullable View iconBackground, int color) {
+    if (iconBackground == null) return;
+
+    if (iconBackground.getId() == R.id.icon_frame_grid) {
+      ViewCompat.setBackgroundTintList(iconBackground, ColorStateList.valueOf(color));
+    } else {
+      iconBackground.setBackgroundColor(color);
+    }
+  }
+
   private void showRoundedThumbnail(
       ItemViewHolder viewHolder,
       IconDataParcelable iconData,
@@ -1366,7 +1386,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
               : viewHolder.iconLayout;
 
       viewHolder.genericIcon.setVisibility(View.VISIBLE);
-      iconBackground.setBackgroundColor(grey_color);
+      setGridIconBackgroundColor(iconBackground, grey_color);
       Glide.with(mainFragment)
           .load(R.drawable.ic_broken_image_white_24dp)
           .into(viewHolder.genericIcon);
@@ -1388,7 +1408,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
           @Override
           public boolean onLoadFailed(
               @Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
-            iconBackground.setBackgroundColor(grey_color);
+            setGridIconBackgroundColor(iconBackground, grey_color);
             new Handler(
                     msg -> {
                       Glide.with(mainFragment)
@@ -1412,7 +1432,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.genericIcon.setImageDrawable(null);
             viewHolder.genericIcon.setVisibility(View.GONE);
             view.setVisibility(View.VISIBLE);
-            iconBackground.setBackgroundColor(
+            setGridIconBackgroundColor(
+                iconBackground,
                 mainFragment.getResources().getColor(android.R.color.transparent));
             errorListener.onImageProcessed(false);
             return false;
