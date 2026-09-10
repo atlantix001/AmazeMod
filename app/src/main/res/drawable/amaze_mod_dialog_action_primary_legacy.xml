@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?attr/colorControlHighlight">
+    android:color="?attr/colorAccent">
     <item>
         <inset
             android:insetLeft="2dp"
@@ -8,8 +8,10 @@
             android:insetRight="2dp"
             android:insetBottom="2dp">
             <shape android:shape="rectangle">
-                <solid android:color="@android:color/transparent" />
-                <stroke android:width="1dp" android:color="?attr/colorControlNormal" />
+                <!-- Legacy MaterialDialog controls its label colour independently. A neutral
+                     tonal fill keeps the accent label readable while still marking the action. -->
+                <solid android:color="?attr/colorControlHighlight" />
+                <stroke android:width="1dp" android:color="?attr/colorAccent" />
                 <corners android:radius="24dp" />
             </shape>
         </inset>

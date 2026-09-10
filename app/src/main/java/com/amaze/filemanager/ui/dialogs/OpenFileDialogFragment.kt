@@ -385,12 +385,10 @@ class OpenFileDialogFragment : BaseBottomSheetFragment(), AdjustListViewForTv<Ap
                 lastAppImage.setImageDrawable(
                     requireActivity().packageManager.getApplicationIcon(it.packageName),
                 )
-                justOnceButton.setTextColor((activity as ThemedActivity).accent)
                 justOnceButton.setOnClickListener { _ ->
                     setLastOpenedApp(it, activity as PreferenceActivity)
                     requireContext().startActivityCatchingSecurityException(lastAppIntent)
                 }
-                alwaysButton.setTextColor((activity as ThemedActivity).accent)
                 alwaysButton.setOnClickListener { _ ->
                     setDefaultOpenedApp(it, activity as PreferenceActivity)
                     requireContext().startActivityCatchingSecurityException(lastAppIntent)

@@ -249,10 +249,14 @@ public class ColorPickerDialog extends PreferenceDialogFragmentCompat {
         ((UserColorPreferences) requireArguments().getParcelable(ARG_COLOR_PREF)).getAccent();
 
     // Button views
-    ((AppCompatButton) dialog.findViewById(res.getIdentifier("button1", "id", "android")))
-        .setTextColor(accentColor);
-    ((AppCompatButton) dialog.findViewById(res.getIdentifier("button2", "id", "android")))
-        .setTextColor(accentColor);
+    AppCompatButton positiveButton =
+        dialog.findViewById(res.getIdentifier("button1", "id", "android"));
+    AppCompatButton negativeButton =
+        dialog.findViewById(res.getIdentifier("button2", "id", "android"));
+    positiveButton.setTextColor(accentColor);
+    negativeButton.setTextColor(accentColor);
+    positiveButton.setAllCaps(false);
+    negativeButton.setAllCaps(false);
 
     return dialog;
   }

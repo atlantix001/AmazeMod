@@ -151,7 +151,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
+            style="@style/AmazeModDialogInlineButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/ssh_select_pem"

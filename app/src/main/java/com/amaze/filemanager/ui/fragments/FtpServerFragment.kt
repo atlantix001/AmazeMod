@@ -218,7 +218,7 @@ class FtpServerFragment : Fragment(R.layout.fragment_ftp) {
                             }
                         }
                     }
-                    .positiveText(getString(R.string.change).uppercase())
+                    .positiveText(getString(R.string.change))
                     .negativeText(R.string.cancel)
                     .build()
                     .show()
@@ -267,7 +267,7 @@ class FtpServerFragment : Fragment(R.layout.fragment_ftp) {
                 val dialog =
                     loginDialogBuilder.customView(loginDialogView.root, true)
                         .title(getString(R.string.ftp_login))
-                        .positiveText(getString(R.string.set).uppercase())
+                        .positiveText(getString(R.string.set))
                         .negativeText(getString(R.string.cancel))
                         .build()
 
@@ -333,7 +333,7 @@ class FtpServerFragment : Fragment(R.layout.fragment_ftp) {
                         }
                 }
                 timeoutBuilder
-                    .positiveText(resources.getString(R.string.set).uppercase())
+                    .positiveText(resources.getString(R.string.set))
                     .negativeText(resources.getString(R.string.cancel))
                     .build()
                     .show()

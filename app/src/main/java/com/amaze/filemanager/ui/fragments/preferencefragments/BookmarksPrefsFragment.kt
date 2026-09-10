@@ -177,7 +177,7 @@ class BookmarksPrefsFragment : BasePrefsFragment() {
                 .title(R.string.edit_bookmark)
                 .theme(activity.appTheme.getMaterialDialogTheme())
                 .positiveColor(fabSkin)
-                .positiveText(getString(R.string.edit).uppercase()) // TODO: 29/4/2017 don't use toUpperCase()
+                .positiveText(getString(R.string.edit))
                 .negativeColor(fabSkin)
                 .negativeText(android.R.string.cancel)
                 .customView(v, false)
@@ -222,7 +222,7 @@ class BookmarksPrefsFragment : BasePrefsFragment() {
                 .title(R.string.question_delete_bookmark)
                 .theme(activity.appTheme.getMaterialDialogTheme())
                 .positiveColor(fabSkin)
-                .positiveText(getString(R.string.delete).uppercase()) // TODO: 29/4/2017 don't use toUpperCase(), 20/9,2017 why not?
+                .positiveText(getString(R.string.delete))
                 .negativeColor(fabSkin)
                 .negativeText(android.R.string.cancel)
                 .build()
