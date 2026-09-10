@@ -1,0 +1,177 @@
+/*
+ * Copyright (C) 2014-2020 Arpit Khurana <arpitkh96@gmail.com>, Vishal Nehra <vishalmeham2@gmail.com>,
+ * Emmanuel Messulam<emmanuelbendavid@gmail.com>, Raymond Lai <airwave209gt at gmail.com> and Contributors.
+ *
+ * This file is part of Amaze File Manager.
+ *
+ * Amaze File Manager is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.amaze.filemanager.ui.fragments.preferencefragments
+
+import android.os.Build
+import android.os.Bundle
+import androidx.preference.Preference
+import com.amaze.filemanager.R
+import com.amaze.filemanager.ui.fragments.preferencefragments.PreferencesConstants.PREFERENCE_GRID_COLUMNS
+import com.amaze.filemanager.ui.fragments.preferencefragments.PreferencesConstants.PREFERENCE_GRID_COLUMNS_DEFAULT
+import com.amaze.filemanager.ui.theme.AppThemePreference
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+class AppearancePrefsFragment : BasePrefsFragment() {
+    override val title = R.string.appearance
+
+    /**
+     * The actual value saved for the preference, to see the localized strings see [R.array.columns]
+     */
+    private val savedPreferenceValues =
+        listOf(
+            PREFERENCE_GRID_COLUMNS_DEFAULT,
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+        )
+    private var currentTheme = 0
+    private var gridColumnPref: Preference? = null
+
+    private val onClickTheme =
+        Preference.OnPreferenceClickListener {
+            MaterialAlertDialogBuilder(activity)
+                .setTitle(R.string.theme)
+                .setSingleChoiceItems(R.array.theme, currentTheme) { dialog, which ->
+                    activity.prefs.edit()
+                        .putString(PreferencesConstants.FRAGMENT_THEME, which.toString())
+                        .apply()
+                    activity.utilsProvider.themeManager.setAppThemePreference(
+                        AppThemePreference.getTheme(which),
+                    )
+                    dialog.dismiss()
+                    activity.recreate()
+                }
+                .show()
+            true
+        }
+
+    private val onClickGridColumn =
+        Preference.OnPreferenceClickListener {
+            val columnsPreference =
+                activity.prefs.getString(PREFERENCE_GRID_COLUMNS, PREFERENCE_GRID_COLUMNS_DEFAULT)
+            val current =
+                columnsPreference
+                    ?.toIntOrNull()
+                    ?.minus(1)
+                    ?.coerceIn(0, savedPreferenceValues.lastIndex)
+                    ?: 0
+
+            MaterialAlertDialogBuilder(activity)
+                .setTitle(R.string.gridcolumnno)
+                .setSingleChoiceItems(R.array.columns, current) { dialog, which ->
+                    activity.prefs.edit()
+                        .putString(PREFERENCE_GRID_COLUMNS, savedPreferenceValues[which])
+                        .apply()
+                    dialog.dismiss()
+                    updateGridColumnSummary()
+                }
+                .show()
+
+            true
+        }
+
+    private val onClickFollowBatterySaver =
+        Preference.OnPreferenceClickListener {
+            // recreate the activity since the theme could have changed with this preference change
+            activity.recreate()
+            true
+        }
+
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
+        setPreferencesFromResource(R.xml.appearance_prefs, rootKey)
+
+        val themePref = findPreference<Preference>(PreferencesConstants.FRAGMENT_THEME)
+        val themes = resources.getStringArray(R.array.theme)
+        currentTheme =
+            activity
+                .prefs
+                .getString(PreferencesConstants.FRAGMENT_THEME, "4")!!
+                .toInt()
+
+        themePref?.summary = themes[currentTheme]
+        themePref?.onPreferenceClickListener = onClickTheme
+
+        val monetPref =
+            findPreference<Preference>(PreferencesConstants.PREFERENCE_MONET_DYNAMIC_COLORS)
+        val monetAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+        monetPref?.isVisible = monetAvailable
+        monetPref?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                activity.recreate()
+                true
+            }
+
+        val batterySaverPref =
+            findPreference<Preference>(
+                PreferencesConstants.FRAGMENT_FOLLOW_BATTERY_SAVER,
+            )
+
+        val currentThemeEnum = AppThemePreference.getTheme(currentTheme)
+        batterySaverPref?.isVisible = currentThemeEnum.canBeLight
+        batterySaverPref?.onPreferenceClickListener = onClickFollowBatterySaver
+
+        findPreference<Preference>(PreferencesConstants.PREFERENCE_COLORED_NAVIGATION)
+            ?.let {
+                it.isEnabled = true
+                it.onPreferenceClickListener =
+                    Preference.OnPreferenceClickListener {
+                        activity.invalidateNavBar()
+
+                        true
+                    }
+            }
+
+        findPreference<Preference>(
+            PreferencesConstants.PREFERENCE_SELECT_COLOR_CONFIG,
+        )?.let { colorConfigPref ->
+            colorConfigPref.isEnabled =
+                !monetAvailable ||
+                    !activity.prefs.getBoolean(
+                        PreferencesConstants.PREFERENCE_MONET_DYNAMIC_COLORS,
+                        true,
+                    )
+            colorConfigPref.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    activity.pushFragment(ColorPrefsFragment())
+
+                    true
+                }
+        }
+
+        gridColumnPref = findPreference(PREFERENCE_GRID_COLUMNS)
+        updateGridColumnSummary()
+        gridColumnPref?.onPreferenceClickListener = onClickGridColumn
+    }
+
+    private fun updateGridColumnSummary() {
+        val preferenceColumns =
+            activity.prefs.getString(
+                PREFERENCE_GRID_COLUMNS,
+                PREFERENCE_GRID_COLUMNS_DEFAULT,
+            )
+        gridColumnPref?.summary = preferenceColumns
+    }
+}
