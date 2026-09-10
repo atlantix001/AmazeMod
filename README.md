@@ -1,4 +1,4 @@
-# Amaze File Manager custom — v0.3.2 direct source
+# Amaze File Manager custom — v0.3.3 direct source
 
 This branch is the fully materialized source tree of the last known-good custom build:
 
@@ -7,6 +7,12 @@ This branch is the fully materialized source tree of the last known-good custom 
 From v0.3.0 onward the repository builds the checked-in source directly. There is no runtime patch chain, overlay step, or source transformation step.
 
 The repository now contains the current UI customizations directly in source: the duplicate hidden-files overflow action is removed, interactive dark-theme accents are kept light, and grid/list thumbnails use a consistent rounded treatment.
+
+### v0.3.3
+
+- Unified circular thumbnail surfaces in grid/table and list previews; permissions are placed on a separate centered line above the circle, and stale/recycled Glide callbacks are ignored so thumbnails cannot disappear.
+- Properties storage charts use a smaller center label, larger high-contrast slice values, shorter leader lines and a larger chart area for readability.
+- Dialogs are modernized globally: legacy MaterialDialogs get 28dp corners and tonal pill actions, Material/AppCompat alerts share the rounded theme, and the remaining SSH/SFTP native alerts are migrated to MaterialAlertDialogBuilder.
 
 ### v0.3.2
 

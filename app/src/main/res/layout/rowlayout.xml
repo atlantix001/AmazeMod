@@ -44,13 +44,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/icon_margin_top"
             >
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="@dimen/minimal_icon_size"
                 android:layout_height="@dimen/minimal_icon_size"
                 android:visibility="gone"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
-                android:id="@+id/apk_icon"/>
+                android:id="@+id/apk_icon"
+                app:shapeAppearanceOverlay="@style/AmazeModRoundedThumbnailShape"/>
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/picture_icon"
                 android:layout_width="@dimen/minimal_icon_size"

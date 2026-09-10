@@ -1060,14 +1060,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
               isBackButton, holder.getAdapterPosition(), rowItem, holder.checkImageViewGrid);
         });
     holder.txtTitle.setText(rowItem.title);
+    holder.imageView1.setImageDrawable(null);
+    holder.imageView1.setBackgroundColor(Color.TRANSPARENT);
     holder.imageView1.setVisibility(View.INVISIBLE);
+    holder.genericIcon.setImageDrawable(null);
     holder.genericIcon.setVisibility(View.VISIBLE);
     holder.checkImageViewGrid.setVisibility(View.INVISIBLE);
+    ViewCompat.setBackgroundTintList(holder.iconLayout, null);
 
     if (rowItem.filetype == Icons.IMAGE || rowItem.filetype == Icons.VIDEO) {
       if (getBoolean(PREFERENCE_SHOW_THUMB) && rowItem.getMode() != OpenMode.FTP) {
+        setGridIconBackgroundColor(holder.iconLayout, videoColor);
         holder.imageView1.setVisibility(View.VISIBLE);
-        holder.imageView1.setImageDrawable(null);
         if (utilsProvider.getAppTheme().equals(AppTheme.DARK)
             || utilsProvider.getAppTheme().equals(AppTheme.BLACK))
           holder.imageView1.setBackgroundColor(Color.BLACK);
@@ -1079,10 +1083,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         else holder.genericIcon.setImageResource(R.drawable.ic_doc_video_am);
       }
     } else if (rowItem.filetype == Icons.APK) {
-      if (getBoolean(PREFERENCE_SHOW_THUMB))
+      if (getBoolean(PREFERENCE_SHOW_THUMB)) {
+        setGridIconBackgroundColor(holder.iconLayout, apkColor);
         showRoundedThumbnail(
-            holder, rowItem.iconData, holder.genericIcon, rowItem.iconData::setImageBroken);
-      else {
+            holder, rowItem.iconData, holder.imageView1, rowItem.iconData::setImageBroken);
+      } else {
         holder.genericIcon.setImageResource(R.drawable.ic_doc_apk_white);
       }
     } else {
@@ -1090,8 +1095,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     if (holder.genericIcon.getVisibility() == View.VISIBLE) {
-      View iconBackground =
-          getBoolean(PREFERENCE_USE_CIRCULAR_IMAGES) ? holder.genericIcon : holder.iconLayout;
+      View iconBackground = holder.iconLayout;
       if (rowItem.isDirectory) {
         setGridIconBackgroundColor(iconBackground, iconSkinColor);
       } else {
@@ -1161,8 +1165,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.baseItemView.setBackgroundResource(R.drawable.item_doc_grid);
       } else {
         holder.baseItemView.setBackgroundResource(R.drawable.ic_grid_card_background_dark);
-        setGridIconBackgroundColor(
-            holder.iconLayout, Utils.getColor(context, R.color.icon_background_dark));
       }
     }
 
@@ -1179,7 +1181,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       holder.txtDesc.setText("");
     }
     if (getBoolean(PREFERENCE_SHOW_PERMISSIONS)) {
+      holder.perm.setVisibility(View.VISIBLE);
       holder.perm.setText(rowItem.permissions);
+    } else {
+      holder.perm.setText("");
+      holder.perm.setVisibility(View.INVISIBLE);
     }
   }
 
@@ -1297,6 +1303,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     return iconRef;
   }
 
+  /** Returns true only while an async thumbnail request still belongs to this recycled holder. */
+  private boolean isThumbnailBindingCurrent(
+      @NonNull ItemViewHolder viewHolder, @NonNull IconDataParcelable iconData) {
+    int position = viewHolder.getBindingAdapterPosition();
+    if (position == RecyclerView.NO_POSITION
+        || position < 0
+        || position >= getItemsDigested().size()) {
+      return false;
+    }
+
+    LayoutElementParcelable current = getItemsDigested().get(position).layoutElementParcelable;
+    if (current == null || current.iconData == null) return false;
+
+    IconDataParcelable currentIcon = current.iconData;
+    return currentIcon.type == iconData.type
+        && currentIcon.image == iconData.image
+        && currentIcon.loadingImage == iconData.loadingImage
+        && Objects.equals(currentIcon.path, iconData.path);
+  }
+
   private void showThumbnailWithBackground(
       ItemViewHolder viewHolder,
       IconDataParcelable iconData,
@@ -1324,6 +1350,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
           @Override
           public boolean onLoadFailed(
               @Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+            if (!isThumbnailBindingCurrent(viewHolder, iconData)) return true;
             new Handler(
                     msg -> {
                       viewHolder.genericIcon.setVisibility(View.VISIBLE);
@@ -1347,6 +1374,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
               Target<Drawable> target,
               DataSource dataSource,
               boolean isFirstResource) {
+            if (!isThumbnailBindingCurrent(viewHolder, iconData)) return true;
             viewHolder.genericIcon.setImageDrawable(null);
             viewHolder.genericIcon.setVisibility(View.GONE);
             gradientDrawable.setColor(
@@ -1380,10 +1408,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       AppCompatImageView view,
       OnImageProcessed errorListener) {
     if (iconData.isImageBroken()) {
-      View iconBackground =
-          getBoolean(PREFERENCE_USE_CIRCULAR_IMAGES)
-              ? viewHolder.genericIcon
-              : viewHolder.iconLayout;
+      View iconBackground = viewHolder.iconLayout;
 
       viewHolder.genericIcon.setVisibility(View.VISIBLE);
       setGridIconBackgroundColor(iconBackground, grey_color);
@@ -1396,8 +1421,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       return;
     }
 
-    View iconBackground =
-        getBoolean(PREFERENCE_USE_CIRCULAR_IMAGES) ? viewHolder.genericIcon : viewHolder.iconLayout;
+    View iconBackground = viewHolder.iconLayout;
 
     viewHolder.genericIcon.setVisibility(View.VISIBLE);
     Glide.with(mainFragment).load(iconData.loadingImage).into(viewHolder.genericIcon);
@@ -1408,6 +1432,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
           @Override
           public boolean onLoadFailed(
               @Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+            if (!isThumbnailBindingCurrent(viewHolder, iconData)) return true;
+            viewHolder.genericIcon.setVisibility(View.VISIBLE);
+            view.setVisibility(View.INVISIBLE);
             setGridIconBackgroundColor(iconBackground, grey_color);
             new Handler(
                     msg -> {
@@ -1429,6 +1456,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
               Target<Drawable> target,
               DataSource dataSource,
               boolean isFirstResource) {
+            if (!isThumbnailBindingCurrent(viewHolder, iconData)) return true;
             viewHolder.genericIcon.setImageDrawable(null);
             viewHolder.genericIcon.setVisibility(View.GONE);
             view.setVisibility(View.VISIBLE);

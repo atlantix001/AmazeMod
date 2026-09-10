@@ -33,6 +33,8 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="popup">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="toolbar_theme">@style/overflow_light</item>
+        <item name="materialAlertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
 
     </style>
     <style name="overflow_light" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -58,6 +60,8 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="popup">@style/Theme.AppCompat</item>
         <item name="toolbar_theme">@style/overflow_dark</item>
+        <item name="materialAlertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
     </style>
 
     <!-- black -->

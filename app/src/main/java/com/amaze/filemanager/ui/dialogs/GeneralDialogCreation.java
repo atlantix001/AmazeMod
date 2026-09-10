@@ -802,9 +802,13 @@ public class GeneralDialogCreation {
       chart.setNoDataText(c.getString(R.string.loading));
       chart.setRotationAngle(!isRightToLeft ? 0f : 180f);
       chart.setHoleColor(Color.TRANSPARENT);
+      chart.setHoleRadius(62f);
+      chart.setTransparentCircleRadius(66f);
       chart.setCenterTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
-      chart.setCenterTextSize(15f);
+      chart.setCenterTextSize(10f);
       chart.setCenterTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+      chart.setCenterTextRadiusPercent(100f);
+      chart.setExtraOffsets(8f, 2f, 8f, 2f);
 
       Legend legend = chart.getLegend();
       legend.setEnabled(true);
@@ -841,12 +845,15 @@ public class GeneralDialogCreation {
         set.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         set.setSliceSpace(5f);
         set.setAutomaticallyDisableSliceSpacing(true);
-        set.setValueLinePart2Length(1.05f);
+        set.setValueLinePart2Length(0.65f);
+        set.setValueLineColor(isDarkTheme ? Color.LTGRAY : Color.DKGRAY);
+        set.setValueLineWidth(1.2f);
         set.setSelectionShift(0f);
 
         PieData pieData = new PieData(set);
         pieData.setValueFormatter(new SizeFormatter(c));
         pieData.setValueTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
+        pieData.setValueTextSize(12f);
 
         String totalSpaceFormatted = Formatter.formatFileSize(c, totalSpace);
 

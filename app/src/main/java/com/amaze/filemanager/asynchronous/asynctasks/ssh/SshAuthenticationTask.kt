@@ -20,8 +20,8 @@
 
 package com.amaze.filemanager.asynchronous.asynctasks.ssh
 
-import android.app.AlertDialog
 import androidx.annotation.MainThread
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.amaze.filemanager.R
 import com.amaze.filemanager.application.AppConfig
 import com.amaze.filemanager.asynchronous.asynctasks.Task
@@ -68,7 +68,7 @@ class SshAuthenticationTask(
             val disconnectReason =
                 TransportException::class.java.cast(error)!!.disconnectReason
             if (DisconnectReason.HOST_KEY_NOT_VERIFIABLE == disconnectReason) {
-                AlertDialog.Builder(AppConfig.getInstance().mainActivityContext)
+                MaterialAlertDialogBuilder(AppConfig.getInstance().mainActivityContext)
                     .setTitle(R.string.ssh_connect_failed_host_key_changed_title)
                     .setMessage(R.string.ssh_connect_failed_host_key_changed_message)
                     .setPositiveButton(R.string.ok) { dialog, _ ->

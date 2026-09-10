@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Shared 12dp shape for actual file preview thumbnails in list/table and grid views. -->
+    <!-- Unified circular mask for file previews. The same shape is used by grid and list thumbnails. -->
     <style name="AmazeModRoundedThumbnailShape">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">12dp</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Material Components dialogs: A17-like rounded surface and tonal/pill action buttons. -->
+    <style name="AmazeModMaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/AmazeModDialogShape</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
+    </style>
+
+    <style name="AmazeModDialogShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
+    </style>
+
+    <style name="AmazeModDialogActionButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:background">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

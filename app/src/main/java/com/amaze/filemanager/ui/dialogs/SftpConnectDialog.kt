@@ -21,7 +21,6 @@
 package com.amaze.filemanager.ui.dialogs
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
@@ -74,6 +73,7 @@ import com.amaze.filemanager.utils.PasswordUtil
 import com.amaze.filemanager.utils.SimpleTextWatcher
 import com.amaze.filemanager.utils.X509CertificateUtil.FINGERPRINT
 import com.amaze.filemanager.utils.urlEncoded
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Observable.create
 import io.reactivex.Single
@@ -454,7 +454,7 @@ class SftpConnectDialog : DialogFragment() {
                 hostKeyFingerprint,
                 hostInfo,
             ->
-            AlertDialog.Builder(ctx.get())
+            MaterialAlertDialogBuilder(ctx.get())
                 .setTitle(R.string.ssh_host_key_verification_prompt_title)
                 .setMessage(
                     getString(
@@ -547,7 +547,7 @@ class SftpConnectDialog : DialogFragment() {
                     edit,
                 )
             } else {
-                AlertDialog.Builder(ctx.get())
+                MaterialAlertDialogBuilder(ctx.get())
                     .setTitle(
                         R.string.ssh_connect_failed_host_key_changed_title,
                     ).setMessage(

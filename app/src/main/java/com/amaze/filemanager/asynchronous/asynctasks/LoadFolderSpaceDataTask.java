@@ -147,12 +147,15 @@ public class LoadFolderSpaceDataTask extends AsyncTask<Void, Long, Pair<String, 
     set.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
     set.setSliceSpace(5f);
     set.setAutomaticallyDisableSliceSpacing(true);
-    set.setValueLinePart2Length(1.05f);
+    set.setValueLinePart2Length(0.65f);
+    set.setValueLineColor(isDarkTheme ? Color.LTGRAY : Color.DKGRAY);
+    set.setValueLineWidth(1.2f);
     set.setSelectionShift(0f);
 
     PieData pieData = new PieData(set);
     pieData.setValueFormatter(new GeneralDialogCreation.SizeFormatter(context));
     pieData.setValueTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
+    pieData.setValueTextSize(12f);
 
     chart.setCenterText(totalSpace);
     chart.setData(pieData);
