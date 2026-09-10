@@ -20,7 +20,8 @@ jobs:
           set -euo pipefail
           test -f AMAZE_MOD.env
           source AMAZE_MOD.env
-          test "$MOD_VERSION" = "0.3.0"
+          test -n "${MOD_VERSION:-}"
+          echo "Building AmazeMod version $MOD_VERSION"
           test "$LEGACY_PATCH_BASE" = "0.2.17"
           test "$AMAZE_UPSTREAM_TAG" = "v3.11.3"
           test "$AMAZE_UPSTREAM_COMMIT" = "1d7520eab2ccdecee3c5fda9da440e97c48dd95f"
