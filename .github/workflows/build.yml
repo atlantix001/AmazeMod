@@ -1,0 +1,111 @@
+name: Amaze direct source build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout direct source
+        uses: actions/checkout@v4
+
+      - name: Read and verify source metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f AMAZE_MOD.env
+          source AMAZE_MOD.env
+          test "$MOD_VERSION" = "0.3.0"
+          test "$LEGACY_PATCH_BASE" = "0.2.17"
+          test "$AMAZE_UPSTREAM_TAG" = "v3.11.3"
+          test "$AMAZE_UPSTREAM_COMMIT" = "1d7520eab2ccdecee3c5fda9da440e97c48dd95f"
+          test ! -e patches
+          test -f signing/keystore.properties
+          source signing/keystore.properties
+          test -n "${storeFile:-}"
+          test -n "${storePassword:-}"
+          test -n "${keyAlias:-}"
+          test -n "${keyPassword:-}"
+          test -f "signing/$storeFile"
+          echo "MOD_VERSION=$MOD_VERSION" >> "$GITHUB_ENV"
+          echo "AMAZE_UPSTREAM_TAG=$AMAZE_UPSTREAM_TAG" >> "$GITHUB_ENV"
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Accept Android SDK licenses
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [[ -x "$SDKMANAGER" ]]; then
+            set +o pipefail
+            yes | "$SDKMANAGER" --licenses >/dev/null || true
+            set -o pipefail
+          fi
+
+      - name: Install Rust Android targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup target add \
+            armv7-linux-androideabi \
+            aarch64-linux-android \
+            i686-linux-android \
+            x86_64-linux-android
+
+      - name: Build F-Droid release from checked-in source
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x gradlew
+          ./gradlew --version
+          ./gradlew :app:assembleFdroidRelease --no-daemon --stacktrace
+
+      - name: Sign and verify custom APK
+        id: artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          source AMAZE_MOD.env
+          source signing/keystore.properties
+
+          APK_IN="$(find app/build/outputs/apk -type f -name '*.apk' | grep -i '/fdroid/' | grep -i '/release/' | head -1 || true)"
+          if [[ -z "$APK_IN" || ! -f "$APK_IN" ]]; then
+            echo "Could not locate fdroid release APK" >&2
+            find app/build/outputs/apk -type f -name '*.apk' -print || true
+            exit 1
+          fi
+
+          APKSIGNER="$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -1)"
+          test -x "$APKSIGNER"
+
+          OUT="Amaze-custom-${MOD_VERSION}-${AMAZE_UPSTREAM_TAG}.apk"
+          "$APKSIGNER" sign \
+            --ks "signing/$storeFile" \
+            --ks-key-alias "$keyAlias" \
+            --ks-pass "pass:$storePassword" \
+            --key-pass "pass:$keyPassword" \
+            --out "$OUT" "$APK_IN"
+
+          "$APKSIGNER" verify --verbose --print-certs "$OUT"
+          sha256sum "$OUT"
+          echo "artifact_name=$OUT" >> "$GITHUB_OUTPUT"
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact.outputs.artifact_name }}
+          path: ${{ steps.artifact.outputs.artifact_name }}
+          if-no-files-found: error
