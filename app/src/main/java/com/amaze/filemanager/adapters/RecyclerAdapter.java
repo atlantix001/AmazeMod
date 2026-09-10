@@ -93,7 +93,6 @@ import com.bumptech.glide.request.target.Target;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -1389,17 +1388,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
   }
 
   /**
-   * Colors the grid thumbnail surface without replacing its rounded shape drawable.
-   * Generic icons can still use their legacy background behavior.
+   * Colors the unified grid thumbnail surface while preserving its circular drawable.
+   * Using the drawable itself avoids the inconsistent/no-background result some devices
+   * produced with View background tinting.
    */
   private void setGridIconBackgroundColor(@Nullable View iconBackground, int color) {
     if (iconBackground == null) return;
 
-    if (iconBackground.getId() == R.id.icon_frame_grid) {
-      ViewCompat.setBackgroundTintList(iconBackground, ColorStateList.valueOf(color));
-    } else {
-      iconBackground.setBackgroundColor(color);
+    if (iconBackground.getId() == R.id.icon_frame_grid
+        && iconBackground.getBackground() instanceof GradientDrawable) {
+      GradientDrawable background =
+          (GradientDrawable) iconBackground.getBackground().mutate();
+      background.setColor(color);
+      return;
     }
+
+    iconBackground.setBackgroundColor(color);
   }
 
   private void showRoundedThumbnail(
@@ -1460,9 +1464,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.genericIcon.setImageDrawable(null);
             viewHolder.genericIcon.setVisibility(View.GONE);
             view.setVisibility(View.VISIBLE);
-            setGridIconBackgroundColor(
-                iconBackground,
-                mainFragment.getResources().getColor(android.R.color.transparent));
+            // Keep the category-coloured circular surface behind the thumbnail. This prevents
+            // transparent APK/image artwork from looking like a different-sized tile and gives
+            // recycled holders a stable fallback while Glide swaps resources.
             errorListener.onImageProcessed(false);
             return false;
           }

@@ -155,7 +155,7 @@ public class LoadFolderSpaceDataTask extends AsyncTask<Void, Long, Pair<String, 
     PieData pieData = new PieData(set);
     pieData.setValueFormatter(new GeneralDialogCreation.SizeFormatter(context));
     pieData.setValueTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
-    pieData.setValueTextSize(12f);
+    pieData.setValueTextSize(10.5f);
 
     chart.setCenterText(totalSpace);
     chart.setData(pieData);

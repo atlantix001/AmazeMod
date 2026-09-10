@@ -42,12 +42,12 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/generic_icon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/icon"
-                android:scaleType="centerInside" />
+                android:scaleType="fitCenter" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/icon_thumb"

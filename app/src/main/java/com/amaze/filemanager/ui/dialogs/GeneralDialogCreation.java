@@ -805,7 +805,7 @@ public class GeneralDialogCreation {
       chart.setHoleRadius(62f);
       chart.setTransparentCircleRadius(66f);
       chart.setCenterTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
-      chart.setCenterTextSize(10f);
+      chart.setCenterTextSize(13.5f);
       chart.setCenterTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
       chart.setCenterTextRadiusPercent(100f);
       chart.setExtraOffsets(8f, 2f, 8f, 2f);
@@ -853,7 +853,7 @@ public class GeneralDialogCreation {
         PieData pieData = new PieData(set);
         pieData.setValueFormatter(new SizeFormatter(c));
         pieData.setValueTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
-        pieData.setValueTextSize(12f);
+        pieData.setValueTextSize(10.5f);
 
         String totalSpaceFormatted = Formatter.formatFileSize(c, totalSpace);
 
