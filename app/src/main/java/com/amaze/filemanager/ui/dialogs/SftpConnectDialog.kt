@@ -454,34 +454,36 @@ class SftpConnectDialog : DialogFragment() {
                 hostKeyFingerprint,
                 hostInfo,
             ->
-            MaterialAlertDialogBuilder(ctx.get())
-                .setTitle(R.string.ssh_host_key_verification_prompt_title)
-                .setMessage(
-                    getString(
-                        R.string.ssh_host_key_verification_prompt,
-                        hostAndPort,
-                        hostKeyAlgorithm,
-                        hostKeyFingerprint,
-                    ),
-                ).setCancelable(true)
-                .setPositiveButton(R.string.yes) {
-                        dialog1: DialogInterface, _: Int ->
-                    // This closes the host fingerprint verification dialog
-                    dialog1.dismiss()
-                    if (authenticateAndSaveSetup(
-                            connectionSettings,
-                            hostInfo?.toString() ?: hostKeyFingerprint,
-                            edit,
-                        )
-                    ) {
+            ctx.get()?.let { context ->
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(R.string.ssh_host_key_verification_prompt_title)
+                    .setMessage(
+                        getString(
+                            R.string.ssh_host_key_verification_prompt,
+                            hostAndPort,
+                            hostKeyAlgorithm,
+                            hostKeyFingerprint,
+                        ),
+                    ).setCancelable(true)
+                    .setPositiveButton(R.string.yes) {
+                            dialog1: DialogInterface, _: Int ->
+                        // This closes the host fingerprint verification dialog
                         dialog1.dismiss()
-                        log.debug("Saved setup")
-                        dismiss()
-                    }
-                }.setNegativeButton(R.string.no) {
-                        dialog1: DialogInterface, _: Int ->
-                    dialog1.dismiss()
-                }.show()
+                        if (authenticateAndSaveSetup(
+                                connectionSettings,
+                                hostInfo?.toString() ?: hostKeyFingerprint,
+                                edit,
+                            )
+                        ) {
+                            dialog1.dismiss()
+                            log.debug("Saved setup")
+                            dismiss()
+                        }
+                    }.setNegativeButton(R.string.no) {
+                            dialog1: DialogInterface, _: Int ->
+                        dialog1.dismiss()
+                    }.show()
+            }
         }
 
     private fun firstConnectToFtpsServer(
@@ -547,23 +549,25 @@ class SftpConnectDialog : DialogFragment() {
                     edit,
                 )
             } else {
-                MaterialAlertDialogBuilder(ctx.get())
-                    .setTitle(
-                        R.string.ssh_connect_failed_host_key_changed_title,
-                    ).setMessage(
-                        R.string.ssh_connect_failed_host_key_changed_prompt,
-                    ).setPositiveButton(
-                        R.string.update_host_key,
-                    ) { _: DialogInterface?, _: Int ->
-                        authenticateAndSaveSetup(
-                            connectionSettings,
-                            newHostIdentity,
-                            edit,
-                        )
-                    }.setNegativeButton(R.string.cancel_recommended) {
-                            dialog1: DialogInterface, _: Int ->
-                        dialog1.dismiss()
-                    }.show()
+                ctx.get()?.let { context ->
+                    MaterialAlertDialogBuilder(context)
+                        .setTitle(
+                            R.string.ssh_connect_failed_host_key_changed_title,
+                        ).setMessage(
+                            R.string.ssh_connect_failed_host_key_changed_prompt,
+                        ).setPositiveButton(
+                            R.string.update_host_key,
+                        ) { _: DialogInterface?, _: Int ->
+                            authenticateAndSaveSetup(
+                                connectionSettings,
+                                newHostIdentity,
+                                edit,
+                            )
+                        }.setNegativeButton(R.string.cancel_recommended) {
+                                dialog1: DialogInterface, _: Int ->
+                            dialog1.dismiss()
+                        }.show()
+                }
             }
         }
 

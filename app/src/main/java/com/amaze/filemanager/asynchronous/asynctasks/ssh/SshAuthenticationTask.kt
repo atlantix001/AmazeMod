@@ -68,7 +68,8 @@ class SshAuthenticationTask(
             val disconnectReason =
                 TransportException::class.java.cast(error)!!.disconnectReason
             if (DisconnectReason.HOST_KEY_NOT_VERIFIABLE == disconnectReason) {
-                MaterialAlertDialogBuilder(AppConfig.getInstance().mainActivityContext)
+                val context = AppConfig.getInstance().mainActivityContext ?: return
+                MaterialAlertDialogBuilder(context)
                     .setTitle(R.string.ssh_connect_failed_host_key_changed_title)
                     .setMessage(R.string.ssh_connect_failed_host_key_changed_message)
                     .setPositiveButton(R.string.ok) { dialog, _ ->
