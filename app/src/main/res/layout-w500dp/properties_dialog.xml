@@ -178,8 +178,7 @@
         android:layout_width="match_parent"
         android:layout_height="185dp" />
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/AmazeModDialogInlineButton"
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/permission"
@@ -191,8 +190,7 @@
         android:visibility="gone"
         layout="@layout/permissiontable"/>
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/AmazeModDialogInlineButton"
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

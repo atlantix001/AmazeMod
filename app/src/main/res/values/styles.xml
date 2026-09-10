@@ -35,20 +35,20 @@
         <item name="toolbar_theme">@style/overflow_light</item>
         <item name="materialAlertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
         <item name="alertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
-        <item name="buttonBarButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButtonPrimary</item>
-        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButtonPrimary</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
+        <item name="buttonBarButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
         <!-- Afollestad MaterialDialogs 0.9.6 action buttons: use the same tonal pill
              surface as MaterialAlertDialog actions. -->
-        <item name="md_btn_positive_selector">@drawable/amaze_mod_dialog_action_primary_legacy</item>
-        <item name="md_btn_negative_selector">@drawable/amaze_mod_dialog_action_secondary_legacy</item>
-        <item name="md_btn_neutral_selector">@drawable/amaze_mod_dialog_action_secondary_legacy</item>
-        <item name="md_btn_stacked_selector">@drawable/amaze_mod_dialog_action_secondary_legacy</item>
+        <item name="md_btn_positive_selector">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="md_btn_negative_selector">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="md_btn_neutral_selector">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="md_btn_stacked_selector">@drawable/amaze_mod_dialog_action_button</item>
 
     </style>
     <style name="overflow_light" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -76,20 +76,20 @@
         <item name="toolbar_theme">@style/overflow_dark</item>
         <item name="materialAlertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
         <item name="alertDialogTheme">@style/AmazeModMaterialAlertDialogTheme</item>
-        <item name="buttonBarButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButtonPrimary</item>
-        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButtonPrimary</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
+        <item name="buttonBarButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
         <!-- Afollestad MaterialDialogs 0.9.6 action buttons: use the same tonal pill
              surface as MaterialAlertDialog actions. -->
-        <item name="md_btn_positive_selector">@drawable/amaze_mod_dialog_action_primary_legacy</item>
-        <item name="md_btn_negative_selector">@drawable/amaze_mod_dialog_action_secondary_legacy</item>
-        <item name="md_btn_neutral_selector">@drawable/amaze_mod_dialog_action_secondary_legacy</item>
-        <item name="md_btn_stacked_selector">@drawable/amaze_mod_dialog_action_secondary_legacy</item>
+        <item name="md_btn_positive_selector">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="md_btn_negative_selector">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="md_btn_neutral_selector">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="md_btn_stacked_selector">@drawable/amaze_mod_dialog_action_button</item>
     </style>
 
     <!-- black -->

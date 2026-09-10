@@ -41,31 +41,33 @@
         android:focusable="true"
         android:layout_margin="@dimen/material_generic"
         />
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/always_button"
-        style="@style/AmazeModDialogActionButtonPrimary"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:text="@string/always"
+        android:background="@drawable/ripple_focusable"
         android:focusable="true"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/open_as_button"
         android:layout_marginTop="@dimen/material_generic_medium"
         android:layout_marginRight="@dimen/material_generic"
         android:layout_marginEnd="@dimen/material_generic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         />
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/just_once_button"
-        style="@style/AmazeModDialogActionButtonSecondary"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:text="@string/just_once"
+        android:background="@drawable/ripple_focusable"
         android:focusable="true"
         app:layout_constraintRight_toLeftOf="@+id/always_button"
         app:layout_constraintTop_toBottomOf="@id/open_as_button"
         android:layout_marginTop="@dimen/material_generic_medium"
         android:layout_marginRight="@dimen/material_generic"
         android:layout_marginEnd="@dimen/material_generic_medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         />
     <View
         android:id="@+id/divider"

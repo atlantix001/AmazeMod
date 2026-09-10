@@ -146,7 +146,7 @@ class DragAndDropDialog : DialogFragment() {
                     .title(getString(R.string.choose_operation))
                     .customView(R.layout.dialog_drag_drop, true)
                     .theme(dialogTheme)
-                    .negativeText(getString(R.string.cancel))
+                    .negativeText(getString(R.string.cancel).toUpperCase())
                     .negativeColor(accent)
                     .cancelable(false)
                     .onNeutral { _: MaterialDialog?, _: DialogAction? ->

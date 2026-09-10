@@ -870,7 +870,7 @@ public class GeneralDialogCreation {
 
     if (!forStorage && permissions != null && mainFragment != null) {
       AppCompatButton appCompatButton = v.findViewById(R.id.permissionsButton);
-      appCompatButton.setAllCaps(false);
+      appCompatButton.setAllCaps(true);
 
       final View permissionsTable = v.findViewById(R.id.permtable);
       final View button = v.findViewById(R.id.set);
@@ -1075,12 +1075,20 @@ public class GeneralDialogCreation {
   }
 
   public static void showPackageDialog(final File f, final MainActivity m) {
-    new MaterialAlertDialogBuilder(m)
-        .setTitle(R.string.package_installer)
-        .setMessage(R.string.package_installer_text)
-        .setPositiveButton(R.string.install, (dialog, which) -> FileUtils.installApk(f, m))
-        .setNegativeButton(R.string.view, (dialog, which) -> m.openCompressed(f.getPath()))
-        .setNeutralButton(R.string.cancel, null)
+    int accentColor = m.getAccent();
+    MaterialDialog.Builder mat = new MaterialDialog.Builder(m);
+    mat.title(R.string.package_installer)
+        .content(R.string.package_installer_text)
+        .positiveText(R.string.install)
+        .negativeText(R.string.view)
+        .neutralText(R.string.cancel)
+        .positiveColor(accentColor)
+        .negativeColor(accentColor)
+        .neutralColor(accentColor)
+        .onPositive((dialog, which) -> FileUtils.installApk(f, m))
+        .onNegative((dialog, which) -> m.openCompressed(f.getPath()))
+        .theme(m.getAppTheme().getMaterialDialogTheme())
+        .build()
         .show();
   }
 

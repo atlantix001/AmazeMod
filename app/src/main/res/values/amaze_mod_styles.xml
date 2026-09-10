@@ -6,18 +6,17 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <!-- Shared Material dialog surface. Positive actions are visually primary; negative and
-         neutral actions use the quieter outlined treatment, close to Android 17 system dialogs. -->
+    <!-- Material Components dialogs: A17-like rounded surface and tonal/pill action buttons. -->
     <style name="AmazeModMaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="shapeAppearanceOverlay">@style/AmazeModDialogShape</item>
-        <item name="buttonBarButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButtonPrimary</item>
-        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButtonPrimary</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
-        <item name="android:buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButtonSecondary</item>
+        <item name="buttonBarButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/AmazeModDialogActionButton</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/AmazeModDialogActionButton</item>
     </style>
 
     <style name="AmazeModDialogShape">
@@ -25,84 +24,14 @@
         <item name="cornerSize">28dp</item>
     </style>
 
-    <!-- Filled primary action, modelled on the current Android package installer. -->
-    <style name="AmazeModDialogActionButtonPrimary" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:background">@drawable/amaze_mod_dialog_action_primary</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:minWidth">80dp</item>
-        <item name="android:paddingStart">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.01</item>
-        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
-    </style>
-
-    <!-- Secondary/neutral action: unobtrusive outline and accent-coloured label. -->
-    <style name="AmazeModDialogActionButtonSecondary" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:background">@drawable/amaze_mod_dialog_action_secondary</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:minWidth">80dp</item>
-        <item name="android:paddingStart">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.01</item>
+    <style name="AmazeModDialogActionButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:background">@drawable/amaze_mod_dialog_action_button</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
         <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
-    </style>
-
-    <!-- Buttons embedded in a custom dialog body (permissions, PEM selection, drag/drop choices). -->
-    <style name="AmazeModDialogInlineButton" parent="AmazeModDialogActionButtonSecondary">
-        <item name="android:minWidth">96dp</item>
-    </style>
-
-    <!-- MaterialDialogs 0.9.6.0 uses its own TextView-like MDButton. Its stock style has only
-         1dp horizontal text padding, which is why German labels look squeezed. Resource overlay
-         lets us modernize every legacy dialog in one place. -->
-    <style name="MD_ActionButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/md_button_height</item>
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:focusable">true</item>
-    </style>
-
-    <style name="MD_ActionButton.Text" parent="@style/MD_ActionButton">
-        <item name="android:textSize">@dimen/md_button_textsize</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:gravity">center</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:minWidth">@dimen/md_button_min_width</item>
-        <item name="android:paddingStart">@dimen/md_button_textpadding_horizontal</item>
-        <item name="android:paddingEnd">@dimen/md_button_textpadding_horizontal</item>
-        <item name="android:paddingLeft">@dimen/md_button_textpadding_horizontal</item>
-        <item name="android:paddingRight">@dimen/md_button_textpadding_horizontal</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:letterSpacing">0.01</item>
-    </style>
-
-    <style name="MD_ActionButtonStacked" parent="@style/MD_ActionButton">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">24dp</item>
-        <item name="android:paddingLeft">24dp</item>
-        <item name="android:paddingRight">24dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">normal</item>
     </style>
 </resources>
