@@ -98,7 +98,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.text.InputType;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.Formatter;
@@ -804,12 +803,20 @@ public class GeneralDialogCreation {
       chart.setRotationAngle(!isRightToLeft ? 0f : 180f);
       chart.setHoleColor(Color.TRANSPARENT);
       chart.setCenterTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
+      chart.setCenterTextSize(15f);
+      chart.setCenterTextTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
 
-      chart.getLegend().setEnabled(true);
-      chart.getLegend().setForm(Legend.LegendForm.CIRCLE);
-      chart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-      chart.getLegend().setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-      chart.getLegend().setTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
+      Legend legend = chart.getLegend();
+      legend.setEnabled(true);
+      legend.setForm(Legend.LegendForm.CIRCLE);
+      legend.setFormSize(8f);
+      legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+      legend.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+      legend.setTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
+      legend.setWordWrapEnabled(true);
+      legend.setMaxSizePercent(0.95f);
+      legend.setXEntrySpace(8f);
+      legend.setYEntrySpace(3f);
 
       chart.animateY(1000);
 
@@ -843,8 +850,7 @@ public class GeneralDialogCreation {
 
         String totalSpaceFormatted = Formatter.formatFileSize(c, totalSpace);
 
-        chart.setCenterText(
-            new SpannableString(c.getString(R.string.total) + "\n" + totalSpaceFormatted));
+        chart.setCenterText(totalSpaceFormatted);
         chart.setData(pieData);
       } else {
         LoadFolderSpaceDataTask loadFolderSpaceDataTask =
@@ -933,6 +939,7 @@ public class GeneralDialogCreation {
               ? (String) entry.getData()
               : "";
 
+      if (value <= 0f) return "";
       return prefix + Formatter.formatFileSize(context, (long) value);
     }
   }

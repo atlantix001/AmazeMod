@@ -1,4 +1,4 @@
-# Amaze File Manager custom — v0.3.1 direct source
+# Amaze File Manager custom — v0.3.2 direct source
 
 This branch is the fully materialized source tree of the last known-good custom build:
 
@@ -6,7 +6,14 @@ This branch is the fully materialized source tree of the last known-good custom 
 
 From v0.3.0 onward the repository builds the checked-in source directly. There is no runtime patch chain, overlay step, or source transformation step.
 
-The later experimental v0.2.18 / v0.2.18.1 UI changes are intentionally **not included**. Future UI changes should be edited directly in this source tree and committed normally.
+The repository now contains the current UI customizations directly in source: the duplicate hidden-files overflow action is removed, interactive dark-theme accents are kept light, and grid/list thumbnails use a consistent rounded treatment.
+
+### v0.3.2
+
+- fixes recursive size calculation for root-only directories such as `/system` and `/system/app`;
+- simplifies the properties pie-chart center label and improves its legend layout;
+- reduces thumbnail corner rounding from 24dp to 12dp;
+- centers Unix permission strings inside grid/table thumbnails.
 
 Signing uses the private `signing/` directory in this repository, matching the proven v0.2.17 setup. See `SIGNING.md`.
 

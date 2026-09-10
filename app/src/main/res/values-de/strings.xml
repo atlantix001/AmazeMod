@@ -138,7 +138,7 @@
     <string name="newfile">Neue Datei</string>
     <string name="no_files">Keine Dateien</string>
     <string name="used">Belegter Speicherplatz</string>
-    <string name="used_by_others">von anderen Benutzern</string>
+    <string name="used_by_others">anderweitig belegt</string>
     <string name="free">freier Speicherplatz</string>
     <string name="listview">Listenansicht</string>
     <string name="gridview">Tabellenansicht</string>

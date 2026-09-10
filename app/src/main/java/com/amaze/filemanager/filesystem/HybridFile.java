@@ -79,6 +79,7 @@ import com.amaze.filemanager.filesystem.ftp.NetCopyClientUtils;
 import com.amaze.filemanager.filesystem.ftp.NetCopyConnectionInfo;
 import com.amaze.filemanager.filesystem.root.DeleteFileCommand;
 import com.amaze.filemanager.filesystem.root.ListFilesCommand;
+import com.amaze.filemanager.filesystem.root.RootFolderSizeCommand;
 import com.amaze.filemanager.filesystem.ssh.SFTPClientExtKt;
 import com.amaze.filemanager.filesystem.ssh.SFtpClientTemplate;
 import com.amaze.filemanager.filesystem.ssh.SshClientSessionTemplate;
@@ -762,8 +763,13 @@ public class HybridFile {
         size = FileUtils.folderSize(getFile(), null);
         break;
       case ROOT:
-        HybridFileParcelable baseFile = generateBaseFileFromParent();
-        if (baseFile != null) size = baseFile.getSize();
+        long measuredRootSize = RootFolderSizeCommand.INSTANCE.calculate(path);
+        if (measuredRootSize >= 0L) {
+          size = measuredRootSize;
+        } else {
+          HybridFileParcelable baseFile = generateBaseFileFromParent();
+          if (baseFile != null) size = baseFile.getSize();
+        }
         break;
       case OTG:
         size = FileUtils.otgFolderSize(path, context);

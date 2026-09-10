@@ -141,7 +141,7 @@
     <string name="newfile">New File</string>
     <string name="no_files">No Files</string>
     <string name="used">used space</string>
-    <string name="used_by_others">used by others</string>
+    <string name="used_by_others">other used space</string>
     <string name="free">free space</string>
     <string name="listview">List View</string>
     <string name="gridview">Grid View</string>

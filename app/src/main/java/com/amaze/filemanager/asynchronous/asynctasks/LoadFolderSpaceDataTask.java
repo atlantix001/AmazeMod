@@ -39,7 +39,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.text.SpannableString;
 import android.text.format.Formatter;
 import android.view.View;
 
@@ -124,9 +123,12 @@ public class LoadFolderSpaceDataTask extends AsyncTask<Void, Long, Pair<String, 
   }
 
   private List<PieEntry> createEntriesFromArray(long[] dataArray, boolean loading) {
-    long usedByFolder = dataArray[2],
-        usedByOther = dataArray[0] - dataArray[1] - dataArray[2],
-        freeSpace = dataArray[1];
+    long totalSpace = Math.max(0L, dataArray[0]);
+    long freeSpace = Math.max(0L, Math.min(dataArray[1], totalSpace));
+    long usedSpace = Math.max(0L, totalSpace - freeSpace);
+    long measuredFolderSize = Math.max(0L, dataArray[2]);
+    long usedByFolder = Math.min(measuredFolderSize, usedSpace);
+    long usedByOther = Math.max(0L, usedSpace - usedByFolder);
 
     List<PieEntry> entries = new ArrayList<>();
     entries.add(new PieEntry(usedByFolder, LEGENDS[0], loading ? ">" : null));
@@ -152,7 +154,7 @@ public class LoadFolderSpaceDataTask extends AsyncTask<Void, Long, Pair<String, 
     pieData.setValueFormatter(new GeneralDialogCreation.SizeFormatter(context));
     pieData.setValueTextColor(isDarkTheme ? Color.WHITE : Color.BLACK);
 
-    chart.setCenterText(new SpannableString(context.getString(R.string.total) + "\n" + totalSpace));
+    chart.setCenterText(totalSpace);
     chart.setData(pieData);
   }
 }
