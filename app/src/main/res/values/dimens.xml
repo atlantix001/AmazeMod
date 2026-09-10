@@ -52,6 +52,7 @@
 
     <!-- Overrides for the legacy material-dialogs library used throughout Amaze. -->
     <dimen name="md_bg_corner_radius">28dp</dimen>
+    <dimen name="md_action_corner_radius">22dp</dimen>
     <dimen name="md_dialog_frame_margin">24dp</dimen>
     <dimen name="md_content_padding_bottom">8dp</dimen>
     <dimen name="md_content_textsize">16sp</dimen>

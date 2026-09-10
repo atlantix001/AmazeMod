@@ -1083,7 +1083,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
       }
     } else if (rowItem.filetype == Icons.APK) {
       if (getBoolean(PREFERENCE_SHOW_THUMB)) {
-        setGridIconBackgroundColor(holder.iconLayout, apkColor);
+        // APK artwork is often transparent around the actual launcher icon. A neutral surface
+        // keeps those transparent edges visually consistent instead of exposing the vivid APK
+        // category colour behind otherwise self-coloured app icons.
+        setGridIconBackgroundColor(holder.iconLayout, genericColor);
         showRoundedThumbnail(
             holder, rowItem.iconData, holder.imageView1, rowItem.iconData::setImageBroken);
       } else {
