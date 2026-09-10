@@ -1306,7 +1306,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
   /** Returns true only while an async thumbnail request still belongs to this recycled holder. */
   private boolean isThumbnailBindingCurrent(
       @NonNull ItemViewHolder viewHolder, @NonNull IconDataParcelable iconData) {
-    int position = viewHolder.getBindingAdapterPosition();
+    int position = viewHolder.getAdapterPosition();
     if (position == RecyclerView.NO_POSITION
         || position < 0
         || position >= getItemsDigested().size()) {
